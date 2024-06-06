@@ -10,11 +10,6 @@ using namespace metal;
 
 #include "mtl.h"
 
-//typedef struct Params {
-//  int w_in, h_in, d_in;
-//  int w_out, h_out, d_out;
-//} Params;
-
 int idx(int x, int y, int z, int w, int h, int d) {
   int i = z * w * h;
   i += y * w;

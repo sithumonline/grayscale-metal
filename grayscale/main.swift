@@ -10,16 +10,6 @@ import Metal
 let device = MTLCreateSystemDefaultDevice()!
 let commandQueue = device.makeCommandQueue()!
 
-//let shaderSource = """
-//    kernel void square_numbers(device float* numbers [[ buffer(0) ]], uint tid [[ thread_position_in_grid ]]) {
-//        numbers[tid] = numbers[tid] * numbers[tid];
-//    }
-//"""
-
-//let library = try device.makeLibrary(source: shaderSource, options: nil)
-//let url = Bundle.main.url(forResource: "grayscale/Shaders", withExtension: "metallib")!
-//let library = try device.makeLibrary(URL: url)
-
 let library = device.makeDefaultLibrary()!
 let kernel = library.makeFunction(name: "process")!
 
