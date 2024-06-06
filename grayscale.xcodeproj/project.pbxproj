@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E334DC92C1146EC00AFEB26 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8E334DC82C1146EC00AFEB26 /* Shaders.metal */; };
 		8EE1F14E2C11346D00782C02 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE1F14D2C11346D00782C02 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E334DC82C1146EC00AFEB26 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		8EB144B32C11643F006F548D /* mtl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mtl.h; sourceTree = "<group>"; };
 		8EE1F14A2C11346D00782C02 /* grayscale */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = grayscale; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE1F14D2C11346D00782C02 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				8EE1F14D2C11346D00782C02 /* main.swift */,
+				8E334DC82C1146EC00AFEB26 /* Shaders.metal */,
+				8EB144B32C11643F006F548D /* mtl.h */,
 			);
 			path = grayscale;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E334DC92C1146EC00AFEB26 /* Shaders.metal in Sources */,
 				8EE1F14E2C11346D00782C02 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +256,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = grayscale/mtl.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -259,6 +266,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = grayscale/mtl.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
