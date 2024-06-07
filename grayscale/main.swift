@@ -18,22 +18,35 @@ let commandEncoder = commandBuffer.makeComputeCommandEncoder()!
 
 commandEncoder.setComputePipelineState(try device.makeComputePipelineState(function: kernel))
 
-var params:Params = Params(w_in: 2, h_in: 10, d_in: 1, w_out: 2, h_out: 10, d_out: 1)
+let input:Matrix = Matrix<Float>(w:2, h:10, d:1)
+
+let z = input.d - 1
+for y in 0..<input.h {
+    for x in 0..<input.w {
+        input.set(x:x, y:y, z:z, v:Float(y))
+    }
+}
+
+var params:Params = Params(w_in: Int32(input.w), h_in: Int32(input.h), d_in: Int32(input.d), w_out: Int32(input.w), h_out: Int32(input.h), d_out: Int32(input.d))
 commandEncoder.setBytes(&params, length: MemoryLayout<Params>.stride, index: 0)
 
-let input: [Float] = [0.0, 0.0, 1.0, 1.0, 2.0, 2.0]
-commandEncoder.setBuffer(device.makeBuffer(bytes: input as [Float], length: MemoryLayout<Float>.stride * input.count, options: []), offset: 0, index: 1)
+commandEncoder.setBuffer(device.makeBuffer(bytes: input.data! as [Float], length: MemoryLayout<Float>.stride * input.data!.count, options: [.storageModeShared]), offset: 0, index: 1)
 
-let outputBuffer = device.makeBuffer(length: MemoryLayout<Float>.stride, options: [])!
+let outputBuffer = device.makeBuffer(length: MemoryLayout<Float>.stride, options: [.storageModeShared])!
 commandEncoder.setBuffer(outputBuffer, offset: 0, index: 2)
 
-commandEncoder.dispatchThreadgroups(MTLSize(width: 2, height: 10, depth: 1), threadsPerThreadgroup: MTLSize(width: 2, height: 10, depth: 1))
+commandEncoder.dispatchThreadgroups(MTLSize(width: input.w, height: input.h, depth: input.d), threadsPerThreadgroup: MTLSize(width: input.w, height: input.h, depth: input.d))
 
 commandEncoder.endEncoding()
 commandBuffer.commit()
 commandBuffer.waitUntilCompleted()
 
-let outputPointer = outputBuffer.contents().bindMemory(to: Float.self, capacity: input.count)
-let outputArray = Array(UnsafeBufferPointer(start: outputPointer, count: input.count))
+let outputPointer = outputBuffer.contents().bindMemory(to: Float.self, capacity: input.data!.count)
+let outputArray = Array(UnsafeBufferPointer(start: outputPointer, count: input.data!.count))
 
-print("Output Buffer Content: \(outputArray)")
+let output:Matrix = Matrix<Float>(w:input.w, h:input.h, d:input.d)
+output.data = outputArray
+
+for y in 0..<output.h {
+    print("Summed: \(output.get(x: 0, y: y, z: 0))")
+}

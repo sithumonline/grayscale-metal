@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E334DC92C1146EC00AFEB26 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8E334DC82C1146EC00AFEB26 /* Shaders.metal */; };
+		8EB144B52C128F90006F548D /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB144B42C128F8F006F548D /* Matrix.swift */; };
 		8EE1F14E2C11346D00782C02 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE1F14D2C11346D00782C02 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		8E334DC82C1146EC00AFEB26 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		8EB144B32C11643F006F548D /* mtl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mtl.h; sourceTree = "<group>"; };
+		8EB144B42C128F8F006F548D /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		8EE1F14A2C11346D00782C02 /* grayscale */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = grayscale; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE1F14D2C11346D00782C02 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +65,7 @@
 				8EE1F14D2C11346D00782C02 /* main.swift */,
 				8E334DC82C1146EC00AFEB26 /* Shaders.metal */,
 				8EB144B32C11643F006F548D /* mtl.h */,
+				8EB144B42C128F8F006F548D /* Matrix.swift */,
 			);
 			path = grayscale;
 			sourceTree = "<group>";
@@ -127,6 +130,7 @@
 			files = (
 				8E334DC92C1146EC00AFEB26 /* Shaders.metal in Sources */,
 				8EE1F14E2C11346D00782C02 /* main.swift in Sources */,
+				8EB144B52C128F90006F548D /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
