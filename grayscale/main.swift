@@ -46,4 +46,5 @@ let outputArray = Array(UnsafeBufferPointer(start: outputPointer, count: input.d
 let output:Matrix = Matrix<UInt8>(w:input.w, h:input.h, d:input.d)
 output.data = outputArray
 
-saveMatrixAsImage(matrix: output, to: URL(fileURLWithPath: "foo.jpg"))
+let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+saveMatrixAsImage(matrix: output, to: URL(fileURLWithPath: documentDirectory.path + "/output.png"))

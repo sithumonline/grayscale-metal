@@ -18,6 +18,9 @@ func getImageMatrix(from url: URL) -> Matrix<UInt8>? {
     do {
         // Initialize the vImage_Buffer using the non-optional cgImage
         let sourceBuffer = try vImage_Buffer(cgImage: cgImage)
+        defer {
+            free(sourceBuffer.data)
+        }
         
         // Ensure sourceBuffer.data is non-nil and unwrap it safely
         guard let data = sourceBuffer.data else {
@@ -53,6 +56,7 @@ func getImageMatrix(from url: URL) -> Matrix<UInt8>? {
 
 func saveMatrixAsImage(matrix: Matrix<UInt8>, to url: URL) {
     let width = matrix.w
+    let withOfOutput = width/4
     let height = matrix.h
     
     // Each pixel is 4 bytes (RGBA), so the number of bytes per row is width * 4
@@ -62,13 +66,13 @@ func saveMatrixAsImage(matrix: Matrix<UInt8>, to url: URL) {
     let bufferSize = height * bytesPerRow
     let bufferPointer = UnsafeMutableRawPointer.allocate(byteCount: bufferSize, alignment: 1)
     
-    var outputBuffer = vImage_Buffer(data: bufferPointer, height: vImagePixelCount(height), width: vImagePixelCount(width), rowBytes: bytesPerRow)
+    var outputBuffer = vImage_Buffer(data: bufferPointer, height: vImagePixelCount(height), width: vImagePixelCount(withOfOutput), rowBytes: bytesPerRow)
     
     // Fill the buffer with the matrix data
     for y in 0..<height {
         for x in 0..<width {
             let value = matrix.get(x: x, y: y, z: 0)
-            let offset = (y * bytesPerRow) + (x * 4)
+            let offset = (y * bytesPerRow) + x
             bufferPointer.storeBytes(of: value, toByteOffset: offset, as: UInt8.self)     // R
             bufferPointer.storeBytes(of: value, toByteOffset: offset + 1, as: UInt8.self) // G
             bufferPointer.storeBytes(of: value, toByteOffset: offset + 2, as: UInt8.self) // B
@@ -84,11 +88,7 @@ func saveMatrixAsImage(matrix: Matrix<UInt8>, to url: URL) {
     let destinationCGImage = vImageCreateCGImageFromBuffer(&outputBuffer, &format, nil, nil, vImage_Flags(kvImageNoFlags), nil)
     
     if let destinationCGImage = destinationCGImage {
-        let destinationImage = NSImage(cgImage: destinationCGImage.takeRetainedValue(), size: NSSize(width: width, height: height))
-    }
-    
-    if let destinationCGImage = destinationCGImage {
-        let destinationImage = NSImage(cgImage: destinationCGImage.takeRetainedValue(), size: NSSize(width: width, height: height))
+        let destinationImage = NSImage(cgImage: destinationCGImage.takeRetainedValue(), size: NSSize(width: withOfOutput, height: height))
         if let tiffData = destinationImage.tiffRepresentation {
             do {
                 try tiffData.write(to: url)
