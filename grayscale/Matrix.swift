@@ -21,7 +21,7 @@ class Matrix<T> {
         if data != nil {
             return
         }
-        data = [T](repeating: Float(0) as! T, count: w * h * d)
+        data = [T](repeating: UInt8(0) as! T, count: w * h * d)
     }
     
     func index(x: Int, y: Int, z: Int) -> Int {
